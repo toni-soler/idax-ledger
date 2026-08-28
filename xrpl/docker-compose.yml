@@ -1,5 +1,6 @@
 name: idax-ledger-xrpl
 x-validator: &validator
+  profiles: [xrpl]
   platform: linux/amd64
   image: ${XRPLD_IMAGE:-xrpllabsofficial/xrpld:3.3.0}
   restart: unless-stopped

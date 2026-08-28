@@ -5,7 +5,6 @@ include:
 services:
   postgres:
     image: postgres:16.4-alpine
-    profiles: [standalone]
     environment:
       POSTGRES_DB: ${IDAX_LEDGER_DB_NAME:-idax}
       POSTGRES_USER: ${IDAX_LEDGER_DB_USER:-postgres}
@@ -18,8 +17,21 @@ services:
       timeout: 3s
       retries: 20
 
+  core-migrations:
+    build:
+      context: https://github.com/toni-soler/idax-core-runtime.git#v0.1.1
+    command:
+      - -url=jdbc:postgresql://postgres:5432/${IDAX_LEDGER_DB_NAME:-idax}
+      - -user=${IDAX_LEDGER_DB_USER:-postgres}
+      - -password=${IDAX_LEDGER_DB_PASSWORD:?set IDAX_LEDGER_DB_PASSWORD in .env}
+      - -schemas=idax_core
+      - -table=flyway_schema_history_idax_core
+      - migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   backend:
-    profiles: [application]
     build: ../backend
     ports: ["${IDAX_LEDGER_BACKEND_PORT:-8094}:8094"]
     environment:
@@ -29,13 +41,19 @@ services:
       IDAX_LEDGER_XRPL_NODE_01_URL: http://validator-01:5005
       IDAX_LEDGER_XRPL_NODE_02_URL: http://validator-02:5005
       IDAX_LEDGER_XRPL_NODE_03_URL: http://validator-03:5005
+      IDAX_LEDGER_PRIVATE_ENABLED: ${IDAX_LEDGER_PRIVATE_ENABLED:-false}
+      IDAX_LEDGER_AUTH_PUBLIC_KEY_LOCATION: file:/run/keys/idax-public.pem
+      IDAX_SERVICE_AUTH_PUBLIC_KEY_LOCATION: file:/run/keys/idax-public.pem
       IDAX_LEDGER_PRIVATE_NETWORK_ID: ${IDAX_LEDGER_PRIVATE_NETWORK_ID:-2181844733}
       IDAX_LEDGER_ANCHOR_ACCOUNT: ${IDAX_LEDGER_ANCHOR_ACCOUNT:-}
-      IDAX_LEDGER_ANCHOR_SEED_FILE: /run/secrets/idax_ledger_anchor_seed
-    secrets:
-      - idax_ledger_anchor_seed
+      IDAX_LEDGER_ANCHOR_SEED_FILE: ${IDAX_LEDGER_ANCHOR_SEED_FILE:-}
+    volumes:
+      - ./keys/dev-public.pem:/run/keys/idax-public.pem:ro
+    depends_on:
+      core-migrations:
+        condition: service_completed_successfully
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8094/actuator/health/readiness | grep -q UP"]
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8094/actuator/health/readiness | grep -q UP"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -43,6 +61,3 @@ services:
 volumes:
   ledger-postgres:
 
-secrets:
-  idax_ledger_anchor_seed:
-    file: ../xrpl/.runtime/anchoring/secrets/anchor.seed
