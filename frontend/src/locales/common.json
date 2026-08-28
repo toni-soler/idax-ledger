@@ -1,0 +1,21 @@
+{
+  "ledger": {
+    "title": "IDAX Ledger",
+    "nav": {"overview":"Overview","networks":"Networks","nodes":"Nodes","ledgers":"Ledgers","transactions":"Transactions","proofs":"Proofs"},
+    "status": {"healthy":"Healthy","degraded":"Degraded","down":"Down","unavailable":"Unavailable","disabled":"Disabled","enabled":"Enabled","validated":"Validated","pending":"Pending","signed":"Signed","submitted":"Submitted","failed_retryable":"Retryable failure","failed_permanent":"Permanent failure","validated_match":"Validated match","anchor_mismatch":"Anchor mismatch","match":"Match","mismatch":"Mismatch","not_evaluated":"Not evaluated","not_validated":"Not validated","proposing":"Proposing"},
+    "network":"Network","validatedLedger":"Validated ledger","validators":"Validators online","peers":"peers","proofs":"Proofs","validated":"validated","failed":"failed",
+    "privateNotice":"Private XRPL is not XRP Mainnet. Its internal XRP has no real monetary value.",
+    "provider":"Provider","networkId":"Network ID","nodes":"Nodes","node":"Node","state":"State","completeLedgers":"Complete ledgers","lastUpdate":"Last update","statusLabel":"Status",
+    "ledger":"Ledger","hash":"Hash","parentLedger":"Previous ledger","transactions":"Transactions","closeTime":"Close time","previous":"Previous","next":"Next",
+    "transactionType":"Transaction type","result":"Result","account":"Account","sequence":"Sequence","memo":"Decoded Proof memo","viewProof":"View proof","proofFormat":"Proof format","version":"Version","publicId":"Public Proof ID","digest":"Digest",
+    "newProof":"New Proof","externalId":"External ID","type":"Type","transaction":"Transaction","created":"Created","proof":"Proof","proofType":"Proof type","contentHash":"Content hash","hashAlgorithm":"Hash algorithm","canonicalization":"Canonicalization","formatVersion":"Format version","createdBy":"Created by",
+    "anchor":"Anchor","ledgerHash":"Ledger hash","submitted":"Submitted","verify":"Verify","verifyPayload":"Optional JSON payload for integrity verification","integrity":"Integrity","ledgerResult":"Ledger","technicalDetails":"Technical details",
+    "payload":"Payload JSON","profile":"Canonicalization profile","metadata":"Metadata","idempotencyKey":"Idempotency key",
+    "jcsNotice":"The backend applies I-JSON validation and RFC 8785 JCS. The frontend does not calculate the authoritative digest.",
+    "hashNotice":"Provide a lowercase or uppercase 64-character SHA-256 digest. The backend remains authoritative.",
+    "creating":"Creating…","create":"Create Proof","copy":"Copy","loading":"Loading…","search":"Search","back":"Back",
+    "chain":{"content":"Content","sha256":"SHA-256","proof":"Proof","xrplTransaction":"XRPL transaction","validatedLedger":"Validated ledger"},
+    "verifyText":{"match":"The supplied content produces the stored SHA-256 digest.","mismatch":"The supplied content does not match the stored digest.","not_evaluated":"Content integrity was not evaluated."},
+    "errors":{"idempotency":"This idempotency key was already used for different content.","forbidden":"You do not have permission to perform this action.","notFound":"The requested Ledger resource was not found.","generic":"Ledger could not complete the request."}
+  }
+}

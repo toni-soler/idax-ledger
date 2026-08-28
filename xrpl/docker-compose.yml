@@ -1,0 +1,43 @@
+name: idax-ledger-xrpl
+x-validator: &validator
+  platform: linux/amd64
+  image: ${XRPLD_IMAGE:-xrpllabsofficial/xrpld:3.3.0}
+  restart: unless-stopped
+  stop_grace_period: 60s
+  healthcheck:
+    test: ["CMD-SHELL", "xrpld server_info 2>/dev/null | grep -q '\"server_state\" : \"proposing\"'"]
+    interval: 10s
+    timeout: 5s
+    retries: 30
+    start_period: 60s
+  networks: [xrpl-private]
+
+services:
+  validator-01:
+    <<: *validator
+    container_name: idax-ledger-validator-01
+    ports: ["${XRPL_VALIDATOR_01_RPC_PORT:-5006}:5005", "6006:6006", "9001:51235"]
+    volumes:
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-01/config:/config:ro
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-01/data:/var/lib/xrpld
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-01/log:/var/log/xrpld
+  validator-02:
+    <<: *validator
+    container_name: idax-ledger-validator-02
+    ports: ["${XRPL_VALIDATOR_02_RPC_PORT:-5007}:5005", "6007:6006", "9002:51235"]
+    volumes:
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-02/config:/config:ro
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-02/data:/var/lib/xrpld
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-02/log:/var/log/xrpld
+  validator-03:
+    <<: *validator
+    container_name: idax-ledger-validator-03
+    ports: ["${XRPL_VALIDATOR_03_RPC_PORT:-5008}:5005", "6008:6006", "9003:51235"]
+    volumes:
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-03/config:/config:ro
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-03/data:/var/lib/xrpld
+      - ${IDAX_LEDGER_RUNTIME_PATH:-./.runtime}/validator-03/log:/var/log/xrpld
+
+networks:
+  xrpl-private:
+    driver: bridge

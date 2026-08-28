@@ -1,0 +1,40 @@
+schemaVersion: 1
+entities: {}
+module_ui:
+  productName: IDAX Ledger
+  group: ledger
+  groupLabel: ledger.title
+  groupIcon: faLink
+  groupOrder: 38
+  menus:
+    - {key: ledgerOverview, route: /ledger, label: ledger.nav.overview, icon: faGauge, order: 10}
+    - {key: ledgerNetworks, route: /ledger/networks, label: ledger.nav.networks, icon: faCloud, order: 20}
+    - {key: ledgerNodes, route: /ledger/nodes, label: ledger.nav.nodes, icon: faServer, order: 30}
+    - {key: ledgerLedgers, route: /ledger/ledgers, label: ledger.nav.ledgers, icon: faBook, order: 40}
+    - {key: ledgerTransactions, route: /ledger/transactions, label: ledger.nav.transactions, icon: faArrowRightArrowLeft, order: 50}
+    - {key: ledgerProofs, route: /ledger/proofs, label: ledger.nav.proofs, icon: faShield, order: 60}
+permissions:
+  - code: LEDGER_READ
+    moduleKey: LEDGER
+    resourceKey: ledger
+    actionKey: read
+    labelKey: permissions.ledger.read
+    apiPath: /api/ledger
+    description: Read ledger networks, nodes, ledgers and transactions
+    sourceType: LEDGER
+  - code: LEDGER_PROOF_CREATE
+    moduleKey: LEDGER
+    resourceKey: ledger_proof
+    actionKey: create
+    labelKey: permissions.ledger.proof.create
+    apiPath: /api/ledger/proofs
+    description: Create and anchor ledger proofs
+    sourceType: LEDGER
+  - code: LEDGER_PROOF_VERIFY
+    moduleKey: LEDGER
+    resourceKey: ledger_proof
+    actionKey: verify
+    labelKey: permissions.ledger.proof.verify
+    apiPath: /api/ledger/proofs/*/verify
+    description: Verify proof integrity and ledger anchors
+    sourceType: LEDGER

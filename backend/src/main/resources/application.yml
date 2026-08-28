@@ -1,0 +1,83 @@
+spring:
+  application:
+    name: idax-ledger-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/idaxdb}
+    username: ${SPRING_DATASOURCE_USERNAME:idax_backend}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  flyway:
+    enabled: false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+server:
+  port: ${IDAX_LEDGER_BACKEND_PORT:8094}
+idax:
+  service-auth:
+    issuer: ${IDAX_SERVICE_AUTH_ISSUER:idax-service}
+    accepted-audience: ${IDAX_SERVICE_AUTH_ACCEPTED_AUDIENCE:idax-ledger}
+    issuer-enabled: false
+    validation-enabled: true
+    ttl: PT5M
+    maximum-ttl: PT15M
+    public-key-location: ${IDAX_SERVICE_AUTH_PUBLIC_KEY_LOCATION:}
+  auth:
+    mode: ${IDAX_AUTH_MODE:LOCAL}
+    token-validator: ${IDAX_AUTH_TOKEN_VALIDATOR:local}
+  ledger:
+    auth:
+      public-key-location: ${IDAX_LEDGER_AUTH_PUBLIC_KEY_LOCATION:classpath:keys/public.pem}
+    request-timeout: ${IDAX_LEDGER_REQUEST_TIMEOUT:5s}
+    maximum-ledger-age: ${IDAX_LEDGER_MAXIMUM_AGE:30s}
+    anchoring:
+      network: private-xrpl
+      account: ${IDAX_LEDGER_ANCHOR_ACCOUNT:}
+      seed-file: ${IDAX_LEDGER_ANCHOR_SEED_FILE:}
+      last-ledger-offset: ${IDAX_LEDGER_ANCHOR_LAST_LEDGER_OFFSET:20}
+    recovery:
+      enabled: ${IDAX_LEDGER_RECOVERY_ENABLED:true}
+      interval: ${IDAX_LEDGER_RECOVERY_INTERVAL:10s}
+      retry-delay: ${IDAX_LEDGER_RECOVERY_RETRY_DELAY:15s}
+      lock-timeout: ${IDAX_LEDGER_LOCK_TIMEOUT:10s}
+    networks:
+      - id: private-xrpl
+        display-name: Private XRPL
+        provider-type: XRPL
+        kind: PRIVATE
+        enabled: ${IDAX_LEDGER_PRIVATE_ENABLED:true}
+        network-id: ${IDAX_LEDGER_PRIVATE_NETWORK_ID:2181844733}
+        nodes:
+          - id: validator-01
+            rpc-url: ${IDAX_LEDGER_XRPL_NODE_01_URL:http://localhost:5006}
+          - id: validator-02
+            rpc-url: ${IDAX_LEDGER_XRPL_NODE_02_URL:http://localhost:5007}
+          - id: validator-03
+            rpc-url: ${IDAX_LEDGER_XRPL_NODE_03_URL:http://localhost:5008}
+      - id: xrpl-testnet
+        display-name: XRPL Testnet
+        provider-type: XRPL
+        kind: TESTNET
+        enabled: ${IDAX_LEDGER_TESTNET_ENABLED:false}
+        network-id: 1
+        nodes:
+          - id: public-testnet
+            rpc-url: ${IDAX_LEDGER_TESTNET_URL:https://s.altnet.rippletest.net:51234}
+      - id: xrpl-mainnet
+        display-name: XRPL Mainnet
+        provider-type: XRPL
+        kind: MAINNET
+        enabled: ${IDAX_LEDGER_MAINNET_ENABLED:false}
+        network-id: 0
+        nodes:
+          - id: public-mainnet
+            rpc-url: ${IDAX_LEDGER_MAINNET_URL:https://xrplcluster.com}

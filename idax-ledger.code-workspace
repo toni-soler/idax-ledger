@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "name": "idax-ledger-backend",
+      "path": "backend"
+    },
+    {
+      "name": "idax-ledger-frontend",
+      "path": "frontend"
+    },
+    {
+      "name": "idax-ledger-main",
+      "path": "deployment"
+    },
+    {
+      "name": "idax-ledger-xrpl",
+      "path": "xrpl"
+    },
+    {
+      "name": "idax-ledger-doc",
+      "path": "docs"
+    }
+  ],
+  "settings": {
+    "java.autobuild.enabled": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
+  }
+}

@@ -1,0 +1,61 @@
+[server]
+port_rpc_admin_local
+port_ws_admin_local
+port_peer
+
+[port_rpc_admin_local]
+port = 5005
+ip = 0.0.0.0
+admin = 0.0.0.0
+protocol = http
+
+[port_ws_admin_local]
+port = 6006
+ip = 0.0.0.0
+admin = 0.0.0.0
+protocol = ws
+
+[port_peer]
+port = 51235
+ip = 0.0.0.0
+protocol = peer
+
+[node_size]
+small
+
+[node_db]
+type=NuDB
+path=/var/lib/xrpld/db/nudb
+fast_load=1
+
+[ledger_history]
+full
+
+[database_path]
+/var/lib/xrpld/db
+
+[debug_logfile]
+/var/log/xrpld/debug.log
+
+[ips_fixed]
+validator-01 51235
+validator-02 51235
+validator-03 51235
+
+[peer_private]
+1
+
+[validators_file]
+validators.txt
+
+[network_id]
+__NETWORK_ID__
+
+[rpc_startup]
+{ "command": "log_level", "severity": "warning" }
+
+[ssl_verify]
+0
+
+[validator_token]
+__VALIDATOR_TOKEN__

@@ -1,0 +1,9 @@
+{
+  "files": {
+    "backend/src/main/resources/generated/ledger/permission-catalog.generated.json": "0f5b5691f7487c1e9b8e2f0c8d44e9130ac1ecc70555e6d587c854931ed09562",
+    "frontend/src/generated/ledger/crudCatalog.generated.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "frontend/src/generated/ledger/manifest.generated.json": "1206ce366a50a8a98aac9a698fec048eba03101090dfc89dbc5c68978674f46b"
+  },
+  "generatorVersion": 1,
+  "metadata": "scripts/gen-idax-ledger/table-config.yml"
+}

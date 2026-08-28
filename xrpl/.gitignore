@@ -1,0 +1,7 @@
+/.runtime/
+/.diagnostics/
+/target/
+/.env
+*.log
+*validator-keys.json
+*validator-token*

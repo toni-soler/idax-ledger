@@ -1,0 +1,3 @@
+export const FINAL_PROOF_STATUSES=new Set(["VALIDATED","FAILED_RETRYABLE","FAILED_PERMANENT"]);
+export const errorMessageKey=status=>status===409?"ledger.errors.idempotency":status===403?"ledger.errors.forbidden":status===404?"ledger.errors.notFound":"ledger.errors.generic";
+export async function pollProof(load,id,{intervalMs=1500,timeoutMs=30000,signal,onUpdate=()=>{}}={}){const started=Date.now();let proof;while(!signal?.aborted){proof=await load(id);onUpdate(proof);if(FINAL_PROOF_STATUSES.has(proof.status))return {proof,timedOut:false};if(Date.now()-started>=timeoutMs)return {proof,timedOut:true};await new Promise(resolve=>setTimeout(resolve,intervalMs))}throw new DOMException("Aborted","AbortError")}

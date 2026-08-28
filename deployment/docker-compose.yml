@@ -1,0 +1,48 @@
+name: idax-ledger
+include:
+  - path: ../xrpl/docker-compose.yml
+
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    profiles: [standalone]
+    environment:
+      POSTGRES_DB: ${IDAX_LEDGER_DB_NAME:-idax}
+      POSTGRES_USER: ${IDAX_LEDGER_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${IDAX_LEDGER_DB_PASSWORD:?set IDAX_LEDGER_DB_PASSWORD in .env}
+    volumes:
+      - ledger-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    profiles: [application]
+    build: ../backend
+    ports: ["${IDAX_LEDGER_BACKEND_PORT:-8094}:8094"]
+    environment:
+      SPRING_DATASOURCE_URL: ${IDAX_LEDGER_DATASOURCE_URL:-jdbc:postgresql://postgres:5432/idax}
+      SPRING_DATASOURCE_USERNAME: ${IDAX_LEDGER_DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${IDAX_LEDGER_DB_PASSWORD:-}
+      IDAX_LEDGER_XRPL_NODE_01_URL: http://validator-01:5005
+      IDAX_LEDGER_XRPL_NODE_02_URL: http://validator-02:5005
+      IDAX_LEDGER_XRPL_NODE_03_URL: http://validator-03:5005
+      IDAX_LEDGER_PRIVATE_NETWORK_ID: ${IDAX_LEDGER_PRIVATE_NETWORK_ID:-2181844733}
+      IDAX_LEDGER_ANCHOR_ACCOUNT: ${IDAX_LEDGER_ANCHOR_ACCOUNT:-}
+      IDAX_LEDGER_ANCHOR_SEED_FILE: /run/secrets/idax_ledger_anchor_seed
+    secrets:
+      - idax_ledger_anchor_seed
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8094/actuator/health/readiness | grep -q UP"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  ledger-postgres:
+
+secrets:
+  idax_ledger_anchor_seed:
+    file: ../xrpl/.runtime/anchoring/secrets/anchor.seed

@@ -1,0 +1,26 @@
+schemaVersion: 1
+contractVersion: 1
+scaffoldVersion: 1
+module:
+  key: ledger
+  productName: IDAX Ledger
+technical:
+  javaPackage: es.idynamicsax.ledger
+  postgresSchema: idax_ledger
+  apiPrefix: /api/ledger
+components:
+  backend: backend
+  frontend: frontend
+  main: deployment
+generator:
+  directory: backend/scripts/gen-idax-ledger
+  config: backend/scripts/gen-idax-ledger/table-config.yml
+  command: [python3, scripts/gen-idax-ledger/gen-idax-ledger.py]
+validation:
+  backend:
+    test: [mvn, test]
+    package: [mvn, package, -DskipTests]
+  frontend:
+    i18n: [npm, run, "i18n:validate"]
+    test: [npm, test]
+    build: [npm, run, build]
