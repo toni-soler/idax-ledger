@@ -21,7 +21,9 @@ The backend requires the closed-source Maven artifact
 `es.idynamicsax.idax:idax-core`. Core source, source JARs, generators and the
 Dynamics AX-specific `idax-legacy` module are not part of this repository.
 Database prerequisites and artifact-resolution guidance live in the companion
-`idax-core-runtime` repository.
+[`idax-core-runtime`](https://github.com/toni-soler/idax-core-runtime)
+repository. Maven downloads the binary anonymously from its public repository;
+no GitHub token or manual installation is required.
 
 For an unpublished local Core build, override the version explicitly:
 

@@ -4,6 +4,7 @@
   <parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>3.4.4</version><relativePath/></parent>
   <groupId>es.idynamicsax.ledger</groupId><artifactId>idax-ledger-backend</artifactId><version>0.1.0</version>
   <properties><java.version>21</java.version><idax.version>0.1.0</idax.version></properties>
+  <repositories><repository><id>idax-public</id><url>https://toni-soler.github.io/idax-core-runtime/maven2</url></repository></repositories>
   <dependencyManagement><dependencies>
     <dependency><groupId>org.xrpl</groupId><artifactId>xrpl4j-bom</artifactId><version>5.0.0</version><type>pom</type><scope>import</scope></dependency>
   </dependencies></dependencyManagement>
