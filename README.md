@@ -15,6 +15,9 @@ history independent from the private development repositories.
 - `deployment/`: local Docker Compose composition.
 - `docs/`: architecture, operations and security documentation.
 
+For the shortest deployment and day-two operations path, see
+[`docs/QUICKSTART.md`](docs/QUICKSTART.md).
+
 ## IDAX runtime dependency
 
 The backend requires the closed-source Maven artifact
