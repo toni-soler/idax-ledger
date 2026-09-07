@@ -4,11 +4,15 @@ HERE=Path(__file__).resolve().parent
 BACKEND=HERE.parents[1]
 FRONTEND=BACKEND.parent/"frontend"
 cfg=yaml.safe_load((HERE/"table-config.yml").read_text(encoding="utf-8")); ui=cfg.get("module_ui",{})
+manifest=yaml.safe_load((BACKEND.parent/".idax-module.yml").read_text(encoding="utf-8"))
+permission_fields=("code","resourceKey","actionKey","fieldKey","labelKey","apiPath","description")
+permissions=[{field:item.get(field) for field in permission_fields} for item in sorted(manifest.get("permissions",[]),key=lambda item:item["code"])]
+permission_catalog={"schemaVersion":1,"moduleKey":"ledger","sourceType":"IDAX_MODULE","permissions":permissions}
 menus=[{**m,"permission":"LEDGER_READ","group":ui.get("group","ledger"),"groupLabel":ui.get("groupLabel","ledger.title"),"groupIcon":ui.get("groupIcon","faLink"),"groupOrder":ui.get("groupOrder",38)} for m in ui.get("menus",[])]
 routes=[{"path":m["route"],"permission":"LEDGER_READ"} for m in ui.get("menus",[])]
 outputs={
- BACKEND/"src/main/resources/generated/ledger/permission-catalog.generated.json": json.dumps(cfg.get("permissions",[]),ensure_ascii=False,indent=2)+"\n",
- FRONTEND/"src/generated/ledger/manifest.generated.json": json.dumps({"module":"ledger","productName":ui.get("productName","IDAX Ledger"),"menus":menus,"routes":routes,"permissions":cfg.get("permissions",[]),"entities":sorted(cfg.get("entities",{}))},indent=2)+"\n",
+ BACKEND/"src/main/resources/generated/ledger/permission-catalog.generated.json": json.dumps(permission_catalog,ensure_ascii=False,sort_keys=True,indent=2)+"\n",
+ FRONTEND/"src/generated/ledger/manifest.generated.json": json.dumps({"module":"ledger","productName":ui.get("productName","IDAX Ledger"),"menus":menus,"routes":routes,"permissions":permissions,"entities":sorted(cfg.get("entities",{}))},indent=2)+"\n",
  FRONTEND/"src/generated/ledger/crudCatalog.generated.json": "[]\n",
 }
 for path,content in outputs.items(): path.parent.mkdir(parents=True,exist_ok=True); path.write_text(content,encoding="utf-8",newline="\n")

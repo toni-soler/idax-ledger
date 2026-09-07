@@ -1,6 +1,8 @@
 package es.idynamicsax.ledger;
 
 import es.idynamicsax.idax.security.mfa.MfaChallengeTokenService;
+import es.idynamicsax.idax.repository.IdaxPermissionRepository;
+import es.idynamicsax.idax.service.permission.PermissionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ class LedgerApplicationCompositionE2ETest {
         assertThat(context.getBeansOfType(MfaChallengeTokenService.class)).isEmpty();
         assertThat(context.containsBean("localJwtEncoder")).isFalse();
         assertThat(context.getBeansOfType(JwtEncoder.class)).isEmpty();
+        assertThat(context.getBean("permissionService")).isInstanceOf(PermissionService.class);
+        assertThat(context.getBeansOfType(IdaxPermissionRepository.class)).hasSize(1);
         assertThat(context.containsBean("tokenValidator")).isTrue();
         assertThat(context.containsBean("ledgerSecurityFilterChain")).isTrue();
     }

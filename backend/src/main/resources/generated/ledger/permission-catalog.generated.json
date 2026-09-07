@@ -1,32 +1,34 @@
-[
-  {
-    "code": "LEDGER_READ",
-    "moduleKey": "LEDGER",
-    "resourceKey": "ledger",
-    "actionKey": "read",
-    "labelKey": "permissions.ledger.read",
-    "apiPath": "/api/ledger",
-    "description": "Read ledger networks, nodes, ledgers and transactions",
-    "sourceType": "LEDGER"
-  },
-  {
-    "code": "LEDGER_PROOF_CREATE",
-    "moduleKey": "LEDGER",
-    "resourceKey": "ledger_proof",
-    "actionKey": "create",
-    "labelKey": "permissions.ledger.proof.create",
-    "apiPath": "/api/ledger/proofs",
-    "description": "Create and anchor ledger proofs",
-    "sourceType": "LEDGER"
-  },
-  {
-    "code": "LEDGER_PROOF_VERIFY",
-    "moduleKey": "LEDGER",
-    "resourceKey": "ledger_proof",
-    "actionKey": "verify",
-    "labelKey": "permissions.ledger.proof.verify",
-    "apiPath": "/api/ledger/proofs/*/verify",
-    "description": "Verify proof integrity and ledger anchors",
-    "sourceType": "LEDGER"
-  }
-]
+{
+  "moduleKey": "ledger",
+  "permissions": [
+    {
+      "actionKey": "create",
+      "apiPath": "/api/ledger/proofs",
+      "code": "LEDGER_PROOF_CREATE",
+      "description": "Create and anchor ledger proofs",
+      "fieldKey": null,
+      "labelKey": "permissions.ledger.proof.create",
+      "resourceKey": "ledger.proof"
+    },
+    {
+      "actionKey": "verify",
+      "apiPath": "/api/ledger/proofs/*/verify",
+      "code": "LEDGER_PROOF_VERIFY",
+      "description": "Verify proof integrity and ledger anchors",
+      "fieldKey": null,
+      "labelKey": "permissions.ledger.proof.verify",
+      "resourceKey": "ledger.proof"
+    },
+    {
+      "actionKey": "read",
+      "apiPath": "/api/ledger",
+      "code": "LEDGER_READ",
+      "description": "Read ledger networks, nodes, ledgers and transactions",
+      "fieldKey": null,
+      "labelKey": "permissions.ledger.read",
+      "resourceKey": "ledger"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceType": "IDAX_MODULE"
+}

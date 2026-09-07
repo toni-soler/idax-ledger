@@ -1,8 +1,8 @@
 {
   "files": {
-    "backend/src/main/resources/generated/ledger/permission-catalog.generated.json": "0f5b5691f7487c1e9b8e2f0c8d44e9130ac1ecc70555e6d587c854931ed09562",
+    "backend/src/main/resources/generated/ledger/permission-catalog.generated.json": "5742a8f7228b640416cdecf52bd8360e70f4eaf2da6e73a2a38cf57ef814c10f",
     "frontend/src/generated/ledger/crudCatalog.generated.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-    "frontend/src/generated/ledger/manifest.generated.json": "1206ce366a50a8a98aac9a698fec048eba03101090dfc89dbc5c68978674f46b"
+    "frontend/src/generated/ledger/manifest.generated.json": "ed904a843d77e8a2e8aa88d51c9b40c9088d85fdf6519ce79c2cf912b3899afd"
   },
   "generatorVersion": 1,
   "metadata": "scripts/gen-idax-ledger/table-config.yml"

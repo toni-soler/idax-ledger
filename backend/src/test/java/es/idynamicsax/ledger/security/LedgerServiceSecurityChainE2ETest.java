@@ -9,6 +9,7 @@ import es.idynamicsax.idax.security.ServiceTokenValidator;
 import es.idynamicsax.idax.security.CompositeTokenValidator;
 import es.idynamicsax.idax.security.TokenValidator;
 import es.idynamicsax.idax.service.permission.PermissionService;
+import es.idynamicsax.idax.repository.IdaxPermissionRepository;
 import es.idynamicsax.idax.tenant.AppUserResolver;
 import es.idynamicsax.idax.tenant.TenantResolver;
 import es.idynamicsax.ledger.config.LedgerSecurityConfig;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,7 +51,8 @@ class LedgerServiceSecurityChainE2ETest {
     @MockBean LedgerProofService ledgerProofService;
     @MockBean TenantResolver tenantResolver;
     @MockBean AppUserResolver appUserResolver;
-    @MockBean(name="permissionService") PermissionService permissionService;
+    @MockBean JdbcTemplate jdbcTemplate;
+    @MockBean IdaxPermissionRepository permissionRepository;
     @jakarta.annotation.Resource MockMvc mvc;
     @jakarta.annotation.Resource JwtEncoder serviceTestEncoder;
 
@@ -58,13 +61,6 @@ class LedgerServiceSecurityChainE2ETest {
     @BeforeEach void setUp() {
         tenant=UUID.randomUUID();
         SecurityContextHolder.clearContext();
-        org.mockito.Mockito.when(permissionService.hasPermission(org.mockito.ArgumentMatchers.anyString()))
-                .thenAnswer(invocation->{
-                    String permission=invocation.getArgument(0);
-                    var authentication=SecurityContextHolder.getContext().getAuthentication();
-                    return authentication!=null && authentication.getAuthorities().stream()
-                            .anyMatch(authority->permission.equals(authority.getAuthority()));
-                });
     }
 
     @Test void actualSecurityChainEnforcesCreateAndVerifyPermissions() throws Exception {
@@ -165,7 +161,7 @@ class LedgerServiceSecurityChainE2ETest {
     @Configuration(proxyBeanMethods = false)
     @EnableAutoConfiguration(exclude=DataSourceAutoConfiguration.class)
     @Import({LedgerProofController.class, LedgerSecurityConfig.class, LedgerJwtAuthFilter.class,
-            SecurityTestConfig.class})
+            PermissionService.class, SecurityTestConfig.class})
     static class TestApplication {}
 
     @TestConfiguration

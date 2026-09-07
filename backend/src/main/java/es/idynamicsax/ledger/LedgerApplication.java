@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import es.idynamicsax.ledger.config.LedgerProperties;
+import es.idynamicsax.ledger.config.LedgerPermissionCatalogConfiguration;
 import es.idynamicsax.idax.config.ServiceTokenProperties;
 import es.idynamicsax.idax.config.TokenValidatorConfig;
 import es.idynamicsax.idax.config.TransactionConfig;
@@ -14,6 +15,7 @@ import es.idynamicsax.idax.security.ServiceTokenValidator;
 import es.idynamicsax.idax.service.audit.AuditUserContextResolver;
 import es.idynamicsax.idax.service.audit.IdaxAuditEventWriter;
 import es.idynamicsax.idax.service.audit.IdaxAuditService;
+import es.idynamicsax.idax.service.permission.PermissionService;
 import es.idynamicsax.idax.tenant.AppUserResolver;
 import es.idynamicsax.idax.tenant.DbSessionContextService;
 import es.idynamicsax.idax.tenant.RlsTransactionAspect;
@@ -26,7 +28,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"es.idynamicsax.ledger", "es.idynamicsax.idax.domain"})
-@EnableJpaRepositories(basePackages = {"es.idynamicsax.ledger", "es.idynamicsax.idax.repository"})
+@EnableJpaRepositories(basePackages = "es.idynamicsax.ledger")
 @Import({
         TokenValidatorConfig.class,
         TransactionConfig.class,
@@ -40,7 +42,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         RlsTransactionAspect.class,
         IdaxAuditService.class,
         IdaxAuditEventWriter.class,
-        AuditUserContextResolver.class
+        AuditUserContextResolver.class,
+        PermissionService.class,
+        LedgerPermissionCatalogConfiguration.class
 })
 @EnableConfigurationProperties({LedgerProperties.class, ServiceTokenProperties.class})
 @EnableMethodSecurity
