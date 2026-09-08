@@ -10,6 +10,8 @@ import es.idynamicsax.idax.security.CompositeTokenValidator;
 import es.idynamicsax.idax.security.TokenValidator;
 import es.idynamicsax.idax.service.permission.PermissionService;
 import es.idynamicsax.idax.repository.IdaxPermissionRepository;
+import es.idynamicsax.idax.repository.auth.AuthLocalIdentityLookupRepository;
+import es.idynamicsax.idax.service.auth.LocalIdentitySubjectPolicy;
 import es.idynamicsax.idax.tenant.AppUserResolver;
 import es.idynamicsax.idax.tenant.TenantResolver;
 import es.idynamicsax.ledger.config.LedgerSecurityConfig;
@@ -51,6 +53,8 @@ class LedgerServiceSecurityChainE2ETest {
     @MockBean LedgerProofService ledgerProofService;
     @MockBean TenantResolver tenantResolver;
     @MockBean AppUserResolver appUserResolver;
+    @MockBean AuthLocalIdentityLookupRepository authLocalIdentityLookupRepository;
+    @MockBean LocalIdentitySubjectPolicy localIdentitySubjectPolicy;
     @MockBean JdbcTemplate jdbcTemplate;
     @MockBean IdaxPermissionRepository permissionRepository;
     @jakarta.annotation.Resource MockMvc mvc;

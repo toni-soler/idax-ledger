@@ -20,6 +20,10 @@ import es.idynamicsax.idax.tenant.AppUserResolver;
 import es.idynamicsax.idax.tenant.DbSessionContextService;
 import es.idynamicsax.idax.tenant.RlsTransactionAspect;
 import es.idynamicsax.idax.tenant.TenantResolver;
+import es.idynamicsax.idax.repository.auth.AuthLocalIdentityLookupJdbcRepository;
+import es.idynamicsax.idax.repository.admin.IdentityEnsureExternalUserJdbcRepository;
+import es.idynamicsax.idax.repository.admin.IdentityResolveOrCreateExternalUserJdbcRepository;
+import es.idynamicsax.idax.service.auth.LocalIdentitySubjectPolicy;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -38,6 +42,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         ServiceTokenValidator.class,
         TenantResolver.class,
         AppUserResolver.class,
+        IdentityEnsureExternalUserJdbcRepository.class,
+        IdentityResolveOrCreateExternalUserJdbcRepository.class,
+        AuthLocalIdentityLookupJdbcRepository.class,
+        LocalIdentitySubjectPolicy.class,
         DbSessionContextService.class,
         RlsTransactionAspect.class,
         IdaxAuditService.class,

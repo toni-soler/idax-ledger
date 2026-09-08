@@ -19,7 +19,7 @@ services:
 
   core-migrations:
     build:
-      context: https://github.com/toni-soler/idax-core-runtime.git#v0.2.0
+      context: https://github.com/toni-soler/idax-core-runtime.git#v0.3.0
     command:
       - -url=jdbc:postgresql://postgres:5432/${IDAX_LEDGER_DB_NAME:-idax}
       - -user=${IDAX_LEDGER_DB_USER:-postgres}

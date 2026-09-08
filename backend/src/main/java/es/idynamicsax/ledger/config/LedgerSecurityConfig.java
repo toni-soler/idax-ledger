@@ -3,6 +3,8 @@ package es.idynamicsax.ledger.config;
 import es.idynamicsax.idax.tenant.AppUserResolver;
 import es.idynamicsax.idax.tenant.TenantContextFilter;
 import es.idynamicsax.idax.tenant.TenantResolver;
+import es.idynamicsax.idax.repository.auth.AuthLocalIdentityLookupRepository;
+import es.idynamicsax.idax.service.auth.LocalIdentitySubjectPolicy;
 import es.idynamicsax.ledger.security.LedgerJwtAuthFilter;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +43,9 @@ public class LedgerSecurityConfig {
     }
 
     @Bean
-    TenantContextFilter tenantContextFilter(TenantResolver tenantResolver, AppUserResolver appUserResolver) {
-        return new TenantContextFilter(tenantResolver, appUserResolver);
+    TenantContextFilter tenantContextFilter(TenantResolver tenantResolver, AppUserResolver appUserResolver,
+                                            AuthLocalIdentityLookupRepository identityLookup,
+                                            LocalIdentitySubjectPolicy subjectPolicy) {
+        return new TenantContextFilter(tenantResolver, appUserResolver, identityLookup, subjectPolicy);
     }
 }
