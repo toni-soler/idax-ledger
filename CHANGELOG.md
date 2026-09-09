@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0] - 2026-09-09
+
+- Require IDAX Core Runtime 0.3.0.
+- Add the integrated public frontend extension to the IDAX Shell local stack.
+- Support authenticated module routing and local Maven candidate validation.
+- Preserve the existing proof canonicalization and anchor formats.
+
 ## [0.2.0] - 2026-09-01
 
 - Register the generated Ledger permission catalog through the shared IDAX
