@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0] - 2026-09-23
+
+- Require IDAX Core Runtime 0.4.0.
+- Preserve the existing Ledger API, proof formats and frontend bundle.
+- Confirm that generated metadata is bundled at build time and therefore does
+  not need the runtime metadata-fetch cache introduced for large modules.
+
 ## [0.3.0] - 2026-09-09
 
 - Require IDAX Core Runtime 0.3.0.
