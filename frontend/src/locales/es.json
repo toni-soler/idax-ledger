@@ -1,5 +1,12 @@
 {
   "ledger": {
-    "title": "IDAX Ledger"
+    "title": "IDAX Ledger",
+    "errors": {
+      "idempotency": "Esta clave de idempotencia ya se usó para un contenido diferente.",
+      "forbidden": "No tienes permiso para realizar esta acción.",
+      "notFound": "No se encontró el recurso de Ledger solicitado.",
+      "generic": "Ledger no pudo completar la solicitud."
+    },
+    "noEnabledNetwork": "No hay ninguna red de Ledger habilitada en esta instancia. Pide a una persona administradora que habilite una en Redes."
   }
 }

@@ -16,6 +16,7 @@
     "creating":"Creating…","create":"Create Proof","copy":"Copy","loading":"Loading…","search":"Search","back":"Back",
     "chain":{"content":"Content","sha256":"SHA-256","proof":"Proof","xrplTransaction":"XRPL transaction","validatedLedger":"Validated ledger"},
     "verifyText":{"match":"The supplied content produces the stored SHA-256 digest.","mismatch":"The supplied content does not match the stored digest.","not_evaluated":"Content integrity was not evaluated."},
-    "errors":{"idempotency":"This idempotency key was already used for different content.","forbidden":"You do not have permission to perform this action.","notFound":"The requested Ledger resource was not found.","generic":"Ledger could not complete the request."}
+    "errors":{"idempotency":"This idempotency key was already used for different content.","forbidden":"You do not have permission to perform this action.","notFound":"The requested Ledger resource was not found.","generic":"Ledger could not complete the request."},
+    "noEnabledNetwork":"No Ledger network is currently enabled for this instance. Ask an administrator to enable one under Networks."
   }
 }
